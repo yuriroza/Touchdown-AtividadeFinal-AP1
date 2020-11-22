@@ -4,7 +4,6 @@ import prompt from "prompt-sync";
 
 let qb: Quarterback = new Quarterback ('Tom Brady', 98, 92, 87, 85, Math.random()*25);
 
-
 let teclado = prompt();
 let option:number = 0;
 
