@@ -6,6 +6,29 @@ export default class quarterback {
         private _forca: number,
         private _posicao : number,
         ) {}
+    
+    public getPasseCurto(){
+        return this._passeCurto
+    }
+
+    public getPasseMedio(){
+        return this._passeMedio
+    }
+
+    public getPasseLongo(){
+        return this._passeLongo
+    }
+
+    public getForca(){
+        return this._forca
+    }
+    
+    public getPosicao(){
+        return this._posicao;
+    }
+    public setPosicao(posicao: number){
+        this._posicao = posicao;
+    }
 
     public mostraStatus(): string{
         return ("Jogador:" +
