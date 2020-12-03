@@ -1,13 +1,13 @@
-import {Aleatorio} from "./Aleatorio";
+import { Aleatorio } from "./Aleatorio";
 import prompt from "prompt-sync";
-import {Quarterback} from "./Quarterback";
+import { Quarterback } from "./Quarterback";
 
-let qb: Quarterback = new Quarterback ("Tom Brady"); 
+let qb: Quarterback = new Quarterback("Tom Brady");
 
 let teclado = prompt();
-let option:number = 0;
+let option: number = 0;
 
-while(option != 9 && qb.temEnergia()) {
+while (option != 9 && qb.temEnergia()) {
     console.log("==========Marque um Touchdown!===========")
     console.log("1. Passe Longo                          |")
     console.log("2. Passe Médio                          |")
@@ -19,28 +19,60 @@ while(option != 9 && qb.temEnergia()) {
 
     option = +teclado('Escolha uma ação: ')
 
-    switch(option){
+    switch (option) {
         case 1:
-            let avancoLongo: number = qb.avancoLongo();
-            qb.checkPosicao();
-            let desgasteLongo: number = qb.perdeEnergia();
-            console.log(`Você avançou ${avancoLongo.toFixed(0)} posições.`);
-            console.log(`Você perdeu ${desgasteLongo.toFixed(0)} de energia.`);
+            let comparador1: number = Aleatorio.random(1, 100);
+            if (comparador1 < qb.passeLongo) {
+                qb.avancoLongo();
+                qb.perdeEnergia();
+            } else {
+                qb.perdeEnergia();
+            }
+            qb.checkEnergia();
+            console.log(`Você avançou até a posição: ${qb.checkPosicao().toFixed(0)}.`);
+            console.log(`Você está com ${qb.energia.toFixed(0)} de energia.`);
+            console.log(`Faltam ${(100 - qb.posicao).toFixed(0)} posições para vencer.`);
+            qb.isTD();
+            if (qb.isTD() == true){
+                console.log("TOUCHDOWN !!! Você venceu o jogo.")
+                break;
+            }
             break;
         case 2:
-            let avancoMedio: number = qb.avancoMedio();
-            qb.checkPosicao();
-            let desgasteMedio: number = qb.perdeEnergia();
-            console.log(`Você avançou ${avancoMedio.toFixed(0)} posições.`)
-            console.log(`Você perdeu ${desgasteMedio.toFixed(0)} de energia.`)
+            let comparador2: number = Aleatorio.random(1, 100);
+            if (comparador2 < qb.passeMedio) {
+                qb.avancoMedio();
+                qb.perdeEnergia();
+            } else {
+                qb.perdeEnergia();
+            }
+            qb.checkEnergia();
+            console.log(`Você avançou até a posição: ${qb.checkPosicao().toFixed(0)}.`);
+            console.log(`Você está com ${qb.energia.toFixed(0)} de energia.`);
+            console.log(`Faltam ${(100 - qb.posicao).toFixed(0)} posições para vencer.`);
+            qb.isTD();
+            if (qb.isTD() == true) {
+                console.log("TOUCHDOWN !!! Você venceu o jogo.")
+                break;
+            }
             break;
         case 3:
-            let avancoCurto: number = qb.avancoMedio();
-            qb.checkPosicao();
-            qb.touchdown();
-            let desgasteCurto: number = qb.perdeEnergia();
-            console.log(`Você avançou ${avancoCurto.toFixed(0)} posições.`)
-            console.log(`Você perdeu ${desgasteCurto.toFixed(0)} de energia.`)
+            let comparador3: number = Aleatorio.random(1, 100);
+            if (comparador3 < qb.passeCurto) {
+                qb.avancoCurto();
+                qb.perdeEnergia();
+            } else {
+                qb.perdeEnergia();
+            }
+            qb.checkEnergia();
+            console.log(`Você avançou até a posição: ${qb.checkPosicao().toFixed(0)}.`);
+            console.log(`Você está com ${qb.energia.toFixed(0)} de energia.`);
+            console.log(`Faltam ${(100 - qb.posicao).toFixed(0)} posições para vencer.`);
+            qb.isTD();
+            if (qb.isTD() == true) {
+                console.log("TOUCHDOWN !!! Você venceu o jogo.")
+                break;
+            }
             break;
         case 4:
             instrucoes();
@@ -56,12 +88,13 @@ while(option != 9 && qb.temEnergia()) {
 }
 console.log("Você não tem energia, você perdeu o jogo !")
 
-function instrucoes () {
+function instrucoes() {
     console.log("Instruções:");
     console.log("Para vencer o jogo você precisa marcar um touchdown.");
     console.log("Para marcar um touchdown você precisa avançar até a posição 100.");
     console.log("Você inicia o jogo em alguma posição entre 0 e 25.");
     console.log("Você pode fazer passes longos, médios ou curtos.");
-    console.log("Cada passe consome energia.");
+    console.log("Cada passe tem uma % de ser completo ou incompleto.")
+    console.log("Cada passe, completo ou não, consome energia.");
     console.log("Se sua energia chegar a zero você perde.");
 }

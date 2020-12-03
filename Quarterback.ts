@@ -1,4 +1,4 @@
-import { Personagem } from "./personagem";
+import { Personagem } from "./Personagem";
 import { Aleatorio } from "./Aleatorio";
 
 export class Quarterback extends Personagem {
@@ -57,16 +57,13 @@ export class Quarterback extends Personagem {
             ("\nPasse Longo: " + this._passeLongo.toFixed(0)) +
             ("\nForça: " + this._forca.toFixed(0)) +
             ("\nPosição: " + this._posicao.toFixed(0) +
-                "\nEnergia: " + this._energia.toFixed(0))
+            "\nEnergia: " + this._energia.toFixed(0))
         )
     }
 
     public avancoLongo(): number {
         let avanco = this.forca / Aleatorio.random(7, 12);
         this.posicao = this.posicao + avanco;
-        if (this.posicao == 100){
-            this.touchdown();
-        }
         return avanco;
     }
 
@@ -109,12 +106,12 @@ export class Quarterback extends Personagem {
         return this.posicao;
     }
 
-    public touchdown(): string {
-            return ("TOUCHDOWN !! Você venceu o jogo.")
+    public isTD(): boolean{
+        if (this.posicao == 100){
+            return true;
+        } else {
+            return false;
+        }
     }
-
-
-
-
-
+    
 }
