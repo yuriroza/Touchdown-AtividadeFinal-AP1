@@ -1,89 +1,119 @@
-export default class quarterback {
-    constructor(private _nome: string, 
-        private _passeCurto: number,
-        private _passeMedio: number,
-        private _passeLongo: number,
-        private _forca: number,
-        private _posicao : number,
-        ) {}
-    
-    public getPasseCurto(){
-        return this._passeCurto
+import { Personagem } from "./personagem";
+import { Aleatorio } from "./Aleatorio";
+
+export class Quarterback extends Personagem {
+    private _posicao: number;
+    private _energia: number;
+
+    constructor(nome: string) {
+        super(nome);
+
+        this._posicao = Aleatorio.random(1, 25);
+        this._energia = 50;
     }
 
-    public getPasseMedio(){
-        return this._passeMedio
+    public get nome(): string {
+        return this._nome;
     }
 
-    public getPasseLongo(){
-        return this._passeLongo
+    public get passeCurto(): number {
+        return this._passeCurto;
     }
 
-    public getForca(){
-        return this._forca
+    public get passeMedio(): number {
+        return this._passeMedio;
     }
-    
-    public getPosicao(){
+
+    public get passeLongo(): number {
+        return this._passeLongo;
+    }
+
+    public get forca(): number {
+        return this._forca;
+    }
+
+    public get posicao(): number {
         return this._posicao;
     }
-    public setPosicao(posicao: number){
+
+    public get energia(): number {
+        return this._energia;
+    }
+
+    public set posicao(posicao: number) {
         this._posicao = posicao;
     }
 
-    public mostraStatus(): string{
-        return ("Jogador:" +
-        "\nNome: " + 
-        this._nome +
-        ("\nPasse Curto: " + this._passeCurto) +
-        ("\nPasse Médio: " + this._passeMedio) +
-        ("\nPasse Longo: " + this._passeLongo) +
-        ("\nForça: " + this._forca) +
-        ("\nPosição: " + this._posicao.toFixed(0))
-        );
-        
-    }
-    
-    public passarLonge (): void{
-        let comparador = Math.random() * 101;
-        if(comparador <= this._passeLongo){
-            let avanco = this._forca / this.randomizarAvanco(6, 9);
-            this._posicao += Math.floor(avanco);
-        } else{
-            console.log("Você errou o passe ! Perdeu o jogo")
-            }
+    public set energia(energia: number) {
+        this._energia = energia;
     }
 
-    public passarMedio (): void{
-        let comparador = Math.random() * 101;
-        if(comparador <= this._passeMedio){
-            let avanco = this._forca / this.randomizarAvanco(7, 12);
-            this._posicao += Math.floor(avanco);
-        } else{
-            console.log("Você errou o passe ! Perdeu o jogo")
+
+    public mostraStatus(): string {
+        return ("Jogador" +
+            "\nNome:" + this.nome +
+            ("\nPasse Curto: " + this._passeCurto.toFixed(0)) +
+            ("\nPasse Médio: " + this._passeMedio.toFixed(0)) +
+            ("\nPasse Longo: " + this._passeLongo.toFixed(0)) +
+            ("\nForça: " + this._forca.toFixed(0)) +
+            ("\nPosição: " + this._posicao.toFixed(0) +
+                "\nEnergia: " + this._energia.toFixed(0))
+        )
+    }
+
+    public avancoLongo(): number {
+        let avanco = this.forca / Aleatorio.random(7, 12);
+        this.posicao = this.posicao + avanco;
+        if (this.posicao == 100){
+            this.touchdown();
+        }
+        return avanco;
+    }
+
+    public avancoMedio(): number {
+        let avanco = this.forca / Aleatorio.random(9, 14);
+        this.posicao = this.posicao + avanco;
+        return avanco;
+    }
+
+    public avancoCurto(): number {
+        let avanco = this.forca / Aleatorio.random(11, 20);
+        this.posicao = this.posicao + avanco;
+        return avanco;
+    }
+
+    public perdeEnergia(): number {
+        let perda = Aleatorio.random(1, 5);
+        this.energia = this.energia - perda;
+        return perda;
+    }
+
+    public checkEnergia(): void {
+        if (this.energia < 0) {
+            this.energia = 0;
         }
     }
 
-    public passarCurto (): void{
-        let comparador = Math.random() * 101;
-        if(comparador <= this._passeCurto){
-            let avanco = this._forca / this.randomizarAvanco(10, 20);
-            this._posicao += Math.floor(avanco);
-        } else{
-            console.log("Você errou o passe ! Perdeu o jogo")
+    public temEnergia(): boolean {
+        if (this.energia > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public showPosition (): string{
-        return("Você esta na posição " + this._posicao.toFixed(0));
+    public checkPosicao(): number {
+        if (this.posicao > 100) {
+            this.posicao = 100;
+        }
+        return this.posicao;
     }
 
-    public isTd(): boolean {
-        return this._posicao > 100;
+    public touchdown(): string {
+            return ("TOUCHDOWN !! Você venceu o jogo.")
     }
 
-    private randomizarAvanco(fator1: number, fator2: number): number{
-        return fator1 + Math.random() * (fator2 - fator1);
-    }
+
 
 
 
