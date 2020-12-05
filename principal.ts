@@ -7,7 +7,7 @@ let qb: Quarterback = new Quarterback("Tom Brady");
 let teclado = prompt();
 let option: number = 0;
 
-while (option != 9 && qb.temEnergia()) {
+while (option != 9 && qb.temEnergia() && qb.isTD()) {
     console.log("==========Marque um Touchdown!===========")
     console.log("1. Passe Longo                          |")
     console.log("2. Passe Médio                          |")
@@ -32,11 +32,6 @@ while (option != 9 && qb.temEnergia()) {
             console.log(`Você avançou até a posição: ${qb.checkPosicao().toFixed(0)}.`);
             console.log(`Você está com ${qb.energia.toFixed(0)} de energia.`);
             console.log(`Faltam ${(100 - qb.posicao).toFixed(0)} posições para vencer.`);
-            qb.isTD();
-            if (qb.isTD() == true){
-                console.log("TOUCHDOWN !!! Você venceu o jogo.")
-                break;
-            }
             break;
         case 2:
             let comparador2: number = Aleatorio.random(1, 100);
@@ -50,11 +45,6 @@ while (option != 9 && qb.temEnergia()) {
             console.log(`Você avançou até a posição: ${qb.checkPosicao().toFixed(0)}.`);
             console.log(`Você está com ${qb.energia.toFixed(0)} de energia.`);
             console.log(`Faltam ${(100 - qb.posicao).toFixed(0)} posições para vencer.`);
-            qb.isTD();
-            if (qb.isTD() == true) {
-                console.log("TOUCHDOWN !!! Você venceu o jogo.")
-                break;
-            }
             break;
         case 3:
             let comparador3: number = Aleatorio.random(1, 100);
@@ -68,11 +58,6 @@ while (option != 9 && qb.temEnergia()) {
             console.log(`Você avançou até a posição: ${qb.checkPosicao().toFixed(0)}.`);
             console.log(`Você está com ${qb.energia.toFixed(0)} de energia.`);
             console.log(`Faltam ${(100 - qb.posicao).toFixed(0)} posições para vencer.`);
-            qb.isTD();
-            if (qb.isTD() == true) {
-                console.log("TOUCHDOWN !!! Você venceu o jogo.")
-                break;
-            }
             break;
         case 4:
             instrucoes();
@@ -85,8 +70,14 @@ while (option != 9 && qb.temEnergia()) {
         default:
             break;
     }
+
+    if (qb.isTD() == false){
+        console.log("TOUCHDOWN !! Você venceu o jogo.")
+    } else if (qb.temEnergia() == false){
+        console.log("Você não tem energia, você perdeu o jogo !")
+    }
 }
-console.log("Você não tem energia, você perdeu o jogo !")
+
 
 function instrucoes() {
     console.log("Instruções:");
