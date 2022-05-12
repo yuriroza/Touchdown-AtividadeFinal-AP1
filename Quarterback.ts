@@ -106,7 +106,7 @@ export class Quarterback extends Personagem {
         return this.posicao;
     }
 
-    public isTD(): boolean{
+    public isNotTD(): boolean{
         if (this.posicao < 100){
             return true;
         } else {
